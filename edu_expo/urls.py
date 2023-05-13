@@ -32,11 +32,12 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-if settings.DEBUG:
-    try:
-        import debug_toolbar
-    except ImportError:
-        """The debug toolbar was not installed. Ignore the error.
-        settings.py should already have warned the user about it."""
-    else:
-        urlpatterns += [path("^__debug__/", include(debug_toolbar.urls))]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# if settings.DEBUG:
+#     try:
+#         import debug_toolbar
+#     except ImportError:
+#         """The debug toolbar was not installed. Ignore the error.
+#         settings.py should already have warned the user about it."""
+#     else:
+#         urlpatterns += [path("^__debug__/", include(debug_toolbar.urls))]

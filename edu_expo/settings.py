@@ -167,13 +167,13 @@ if email is True:
 dev_env = os.environ.get('DJ_ENV')
 if dev_env == 'development':
     DEBUG = True
-    INSTALLED_APPS += ['debug_toolbar']
-    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+    # INSTALLED_APPS += ['debug_toolbar']
+    # MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
     EMAIL_BACKEND = 'django.project_name.mail.backends.console.EmailBackend'
-    import socket
+    # import socket
 
-    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-    INTERNAL_IPS = [ip[:-1] + "1" for ip in ips] + ['127.0.0.1', 'localhost']
+    # hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    # INTERNAL_IPS = [ip[:-1] + "1" for ip in ips] + ['127.0.0.1', 'localhost']
 
 # CELERY CONGIGURATION
 celery = get_bool_from_env('CELERY', False)
