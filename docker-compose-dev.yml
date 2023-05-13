@@ -1,0 +1,86 @@
+version: '3'
+services:
+  db:
+    image: postgres:14.0
+    restart: always
+    environment:
+      - POSTGRES_USER=edu_expoUser
+      - POSTGRES_PASSWORD=edu_expoPassword
+    volumes:
+      - edu_expo_db_data:/var/lib/postgresql/data
+    networks:
+      - edu_expo_backend_tier
+  redis:
+    image: redis:latest
+    restart: always
+    networks:
+      - edu_expo_backend_tier
+
+  edu_expo:
+    restart: always
+    build: .
+    depends_on:
+      - db
+      - redis
+    env_file: .env
+    command: python manage.py runserver 0.0.0.0:8009
+    environment:
+      - DJANGO_COLLECT_STATIC=off
+      - DJANGO_MANAGEPY_MIGRATE=off
+    links:
+      - db:postgres
+      - redis
+    volumes:
+      - .:/app
+    ports:
+      - "8009:8009"
+    expose:
+      - "8009"
+    networks:
+      - edu_expo_backend_tier
+
+  celery:
+    restart: unless-stopped
+    build: .
+    env_file: .env
+    command: celery -A edu_expo worker -l info
+    depends_on:
+      - db
+      - redis
+    networks:
+      - edu_expo_backend_tier
+  beat:
+    restart: unless-stopped
+    build: .
+    env_file: .env
+    command: celery -A edu_expo beat -l info
+    depends_on:
+      - redis
+    networks:
+      - edu_expo_backend_tier
+  flower:
+    image: mher/flower
+    environment:
+      - FLOWER_PORT=5555
+      - CELERY_BROKER_URL=redis://redis:6379
+    ports:
+      - 5555:5555
+    restart: unless-stopped
+    expose:
+      - "5555"
+    depends_on:
+      - redis
+    networks:
+      - edu_expo_backend_tier
+
+
+volumes:
+  edu_expo_db_data:
+    driver: local
+  static_volume:
+    driver: local
+
+
+networks:
+  edu_expo_backend_tier:
+    driver: bridge

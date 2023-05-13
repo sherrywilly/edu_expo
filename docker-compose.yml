@@ -1,0 +1,53 @@
+version: '3'
+services:
+  db:
+    image: postgres:14.0
+    restart: always
+    environment:
+      - POSTGRES_USER=edu_expoUser
+      - POSTGRES_PASSWORD=edu_expoPassword
+    volumes:
+      - edu_expo_db_data:/var/lib/postgresql/data
+    networks:
+      - edu_expo_backend_tier
+  redis:
+    image: redis:latest
+    restart: always
+    networks:
+      - edu_expo_backend_tier
+
+  edu_expo:
+    restart: always
+    build: .
+    depends_on:
+      - db
+      - redis
+    env_file: .env
+    command: python manage.py runserver 0.0.0.0:8009
+    environment:
+      - DJANGO_COLLECT_STATIC=off
+      - DJANGO_MANAGEPY_MIGRATE=off
+    links:
+      - db:postgres
+      - redis
+    volumes:
+      - .:/app
+    ports:
+      - "8009:8009"
+    expose:
+      - "8009"
+    networks:
+      - edu_expo_backend_tier
+
+
+
+volumes:
+  edu_expo_db_data:
+    driver: local
+  static_volume:
+    driver: local
+
+
+networks:
+  edu_expo_backend_tier:
+    driver: bridge

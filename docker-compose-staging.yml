@@ -1,0 +1,83 @@
+version: '3'
+
+services:
+  db:
+    restart: always
+    image: postgres:14.0
+    environment:
+      - POSTGRES_USER=edu_expoUser
+      - POSTGRES_PASSWORD=edu_expoPassword
+    volumes:
+      - "edu_expo_db_data:/var/lib/postgresql/data"
+    expose:
+      - 5432
+    ports:
+      - 5433:5432
+    networks:
+      - edu_expo_backend_tier
+
+  redis:
+    restart: always
+    image: redis:latest
+    networks:
+      - edu_expo_backend_tier
+
+  edu_expo:
+    restart: always
+    build: .
+    depends_on:
+      - redis
+      - db
+    env_file: .env
+    command: gunicorn edu_expo.wsgi:application --bind 0.0.0.0:8009 --workers 3 --log-level=DEBUG
+    links:
+      - db:postgres
+      - redis
+    ports:
+      - "8009:8009"
+    expose:
+      - "8009"
+    volumes:
+      - .:/app
+    networks:
+    - edu_expo_backend_tier
+
+  celery:
+    build: .
+    command: celery -A edu_expo worker -l info
+    env_file: .env
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+    networks:
+      - edu_expo_backend_tier
+
+  nginx:
+    build: ./nginx
+    depends_on:
+      - edu_expo
+    ports:
+      - "80:80"
+      - "443:443"
+    expose:
+      - "80"
+      - "443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+      - ./static:/app/static/
+      - ./media:/app/media/
+      - ./logs/Nginx:/var/log/nginx/
+    networks:
+      - edu_expo_backend_tier
+
+volumes:
+  edu_expo_db_data:
+    driver: local
+  static_volume:
+    driver: local
+
+networks:
+  edu_expo_backend_tier:
+    driver: bridge
+

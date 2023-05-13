@@ -1,0 +1,451 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
+    <style>
+        .logo-section {
+
+
+        }
+
+        .logo-section img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .registration-section {
+            text-align: center;
+            background-color: white;
+            color: black;
+            padding: 20px;
+        }
+
+
+        .registration-button {
+            background-color: #1E4483;
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            transition-duration: 0.3s;
+            cursor: pointer;
+            border-radius: 15px;
+
+        }
+
+        .registration-button:hover {
+            background-color: lightblue;
+            color: black;
+        }
+
+        .terms-section {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .terms-list {
+            align-self: start;
+            list-style-type: disc;
+            padding-left: 30px;
+        {#    bullet color to blue #}
+
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Slider */
+
+        .slick-slide {
+            margin: 0px 20px;
+        }
+
+        .slick-slide img {
+            width: 100%;
+        }
+
+        .slick-slider {
+            position: relative;
+            display: block;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -khtml-user-select: none;
+            -ms-touch-action: pan-y;
+            touch-action: pan-y;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .slick-list {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .slick-list:focus {
+            outline: none;
+        }
+
+        .slick-list.dragging {
+            cursor: pointer;
+            cursor: hand;
+        }
+
+        .slick-slider .slick-track,
+        .slick-slider .slick-list {
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .slick-track {
+            position: relative;
+            top: 0;
+            left: 0;
+            display: block;
+        }
+
+        .slick-track:before,
+        .slick-track:after {
+            display: table;
+            content: '';
+        }
+
+        .slick-track:after {
+            clear: both;
+        }
+
+        .slick-loading .slick-track {
+            visibility: hidden;
+        }
+
+        .slick-slide {
+            display: none;
+            float: left;
+            height: 100%;
+            min-height: 1px;
+        }
+
+        [dir='rtl'] .slick-slide {
+            float: right;
+        }
+
+        .slick-slide img {
+            display: block;
+        }
+
+        .slick-slide.slick-loading img {
+            display: none;
+        }
+
+        .slick-slide.dragging img {
+            pointer-events: none;
+        }
+
+        .slick-initialized .slick-slide {
+            display: block;
+        }
+
+        .slick-loading .slick-slide {
+            visibility: hidden;
+        }
+
+        .slick-vertical .slick-slide {
+            display: block;
+            height: auto;
+            border: 1px solid transparent;
+        }
+
+        .slick-arrow.slick-hidden {
+            display: none;
+        }
+
+        .banner-stretch img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .brand-partner {
+            text-align: center;
+            padding: 20px;
+            color: darkred;
+        }
+
+        h1 h2 {
+            font-size: 15px;
+        }
+
+        .section_padding_130 {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .faq_area {
+            position: relative;
+            z-index: 1;
+            background-color: #f5f5ff;
+        }
+
+        .faq-accordian {
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-accordian .card {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-accordian .card:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-accordian .card .card-header {
+            background-color: #ffffff;
+            padding: 0;
+            border-bottom-color: #ebebeb;
+        }
+
+        .faq-accordian .card .card-header h6 {
+            cursor: pointer;
+            padding: 1.75rem 2rem;
+            color: #3f43fd;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -ms-grid-row-align: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+        }
+
+        .faq-accordian .card .card-header h6 span {
+            font-size: 1.5rem;
+        }
+
+        .faq-accordian .card .card-header h6.collapsed {
+            color: #070a57;
+        }
+
+        .faq-accordian .card .card-header h6.collapsed span {
+            -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+        }
+
+        .faq-accordian .card .card-body {
+            padding: 1.75rem 2rem;
+        }
+
+        .faq-accordian .card .card-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        @media only screen and (max-width: 575px) {
+            .support-button p {
+                font-size: 14px;
+            }
+        }
+
+        .support-button i {
+            color: #3f43fd;
+            font-size: 1.25rem;
+        }
+
+        @media only screen and (max-width: 575px) {
+            .support-button i {
+                font-size: 1rem;
+            }
+        }
+
+        .support-button a {
+            text-transform: capitalize;
+            color: #2ecc71;
+        }
+
+        @media only screen and (max-width: 575px) {
+            .support-button a {
+                font-size: 13px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+{# logo section #}
+<div class="logo-section">
+    <img src="{% static 'edu-expo-website-logo.png' %}" alt="logo">
+</div>
+<div class="registration-section">
+    <h2>For Last date for registration ${DATE}</h2>
+
+    <center>
+        <a href="{% url 'student_registration' %}">
+        <button class="registration-button" >Student Register
+        </button></a>
+    </center>
+    <div style="display: flex;justify-content: space-around">
+        <div id="student-registration" style="display: none;">
+            <button class="registration-button">Student Register</button>
+        </div>
+
+        <div id="others-registration" style="display: none;">
+            <button class="registration-button">Others Register</button>
+        </div>
+    </div>
+</div>
+<div class="faq_area section_padding_130" id="faq">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-8 col-lg-6">
+                <!-- Section Heading-->
+                <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s"
+                     style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                    <h3>Terms and Conditions</h3>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <!-- FAQ Area-->
+            <div class="col-12 col-sm-10 col-lg-8">
+                <div class="accordion faq-accordian" id="faqAccordion">
+                    <div class="card border-0 wow fadeInUp" data-wow-delay="0.2s"
+                         style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                        <div class="card-header" id="headingOne">
+                            <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne"
+                                aria-expanded="true" aria-controls="collapseOne">How can I install this app?<span
+                                    class="lni-chevron-up"></span></h6>
+                        </div>
+
+                    </div>
+                    <div class="card border-0 wow fadeInUp" data-wow-delay="0.3s"
+                         style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                        <div class="card-header" id="headingTwo">
+                            <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                                aria-expanded="true" aria-controls="collapseTwo">The apps isn't installing?<span
+                                    class="lni-chevron-up"></span></h6>
+                        </div>
+
+                    </div>
+                    <div class="card border-0 wow fadeInUp" data-wow-delay="0.4s"
+                         style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+                        <div class="card-header" id="headingThree">
+                            <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree"
+                                aria-expanded="true" aria-controls="collapseThree">Contact form isn't working?<span
+                                    class="lni-chevron-up"></span></h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h2>Collage Associates </h2>
+    <section class="customer-logos slider">
+        <div class="slide"><img src="https://image.freepik.com/free-vector/luxury-letter-e-logo-design_1017-8903.jpg">
+        </div>
+        <div class="slide"><img src="http://www.webcoderskull.com/img/logo.png"></div>
+        <div class="slide"><img src="https://image.freepik.com/free-vector/3d-box-logo_1103-876.jpg"></div>
+        <div class="slide"><img src="https://image.freepik.com/free-vector/blue-tech-logo_1103-822.jpg"></div>
+        <div class="slide"><img src="https://image.freepik.com/free-vector/colors-curl-logo-template_23-2147536125.jpg">
+        </div>
+        <div class="slide"><img src="https://image.freepik.com/free-vector/abstract-cross-logo_23-2147536124.jpg"></div>
+        <div class="slide"><img src="https://image.freepik.com/free-vector/football-logo-background_1195-244.jpg"></div>
+        <div class="slide"><img src="https://image.freepik.com/free-vector/background-of-spots-halftone_1035-3847.jpg">
+        </div>
+        <div class="slide"><img
+                src="https://image.freepik.com/free-vector/retro-label-on-rustic-background_82147503374.jpg"></div>
+    </section>
+
+</div>
+{#banner strech #}
+<div class="banner-stretch">
+    <img src="{% static 'banner2.jpeg' %}" alt="banner-stretch">
+</div>
+<div class="container">
+    <h1 class="font-weight-bold h3 mb-5 brand-partner">Sponsors</h1>
+    <section class="customer-logos slider">
+        <div class="slide"><img src="https://mydio.in/assets/logo/dio.svg">
+        </div>
+
+        <div class="slide"><img src="https://mydio.in/assets/logo/dio.svg">
+        </div>
+
+
+    </section>
+    <div class="footer">
+        <p>&copy; 2023 Your Company. All rights reserved.</p>
+    </div>
+
+    <script>
+        function showRegistration() {
+            var studentReg = document.getElementById("student-registration");
+            var othersReg = document.getElementById("others-registration");
+
+            if (studentReg.style.display === "none") {
+                studentReg.style.display = "block";
+                othersReg.style.display = "block";
+            } else {
+                studentReg.style.display = "none";
+                othersReg.style.display = "none";
+            }
+        }
+
+        $(document).ready(function () {
+            $('.customer-logos').slick({
+                slidesToShow: 6,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 1500,
+                arrows: false,
+                dots: false,
+                pauseOnHover: false,
+                responsive: [{
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 4
+                    }
+                }, {
+                    breakpoint: 520,
+                    settings: {
+                        slidesToShow: 3
+                    }
+                }]
+            });
+        });
+    </script>
+</body>
+</html>

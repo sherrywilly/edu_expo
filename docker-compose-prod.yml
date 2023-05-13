@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  edu_expo:
+    restart: always
+    image: registry.gitlab.com/edu_expo/web-service
+    command: gunicorn edu_expo.wsgi:application --bind 0.0.0.0:8009 --workers 3 --log-level=DEBUG
+    env_file: .env
+    ports:
+      - "8009:8009"
+    expose:
+      - "8000"
+    networks:
+    - edu_expo_backend_tier
+
+  celery:
+    image: registry.gitlab.com/edu_expo/web-service
+    command: celery -A edu_expo worker -l info
+    env_file: .env
+    restart: unless-stopped
+    networks:
+      - edu_expo_backend_tier
+
+  nginx:
+    image: registry.gitlab.com/classmate2/web-service/nginx
+    depends_on:
+      - edu_expo
+    ports:
+      - "80:80"
+      - "443:443"
+    expose:
+      - "80"
+      - "443"
+    volumes:
+      - ./logs/Nginx:/var/log/nginx/
+    networks:
+      - edu_expo_backend_tier
+
+volumes:
+  static_volume:
+    driver: local
+
+networks:
+  edu_expo_backend_tier:
+    driver: bridge
