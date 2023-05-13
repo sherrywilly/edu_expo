@@ -25,7 +25,7 @@ class StudentRegistrationView(View):
             context = {
                 'form': form
             }
-            messages.success(request, "Thank you for registering. We will contact you soon.")
+            messages.success(request, "Thank You for Registering. You will receive Entry Pass Soon!")
             return redirect("student_registration")
         else:
             context = {
